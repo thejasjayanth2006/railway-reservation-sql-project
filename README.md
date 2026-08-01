@@ -11,7 +11,7 @@ This project involves designing and building a Railway Reservation System databa
 -- 1. STATION
 -- ------------------------------------------------------------
  ```sql
- CREATE TABLE Station (
+CREATE TABLE Station (
     station_id     SERIAL PRIMARY KEY,
     station_name   VARCHAR(100) NOT NULL,
     station_code   VARCHAR(10)  NOT NULL UNIQUE,
@@ -22,8 +22,8 @@ This project involves designing and building a Railway Reservation System databa
 -- ------------------------------------------------------------
 -- 2. TRAIN
 -- ------------------------------------------------------------
- ```
- CREATE TABLE Train (
+ ```sql
+CREATE TABLE Train (
     train_id       SERIAL PRIMARY KEY,
     train_number   VARCHAR(10) NOT NULL UNIQUE,
     train_name     VARCHAR(100) NOT NULL,
@@ -34,8 +34,8 @@ This project involves designing and building a Railway Reservation System databa
 -- ------------------------------------------------------------
 -- 3. ROUTE
 -- ------------------------------------------------------------
- ```
-    CREATE TABLE Route (
+ ```sql
+CREATE TABLE Route (
     route_id           SERIAL PRIMARY KEY,
     train_id           INT NOT NULL REFERENCES Train(train_id) ON DELETE CASCADE,
     source_station_id  INT NOT NULL REFERENCES Station(station_id),
@@ -47,8 +47,8 @@ This project involves designing and building a Railway Reservation System databa
 -- ------------------------------------------------------------
 -- 4. ROUTE_STOPS
 -- ------------------------------------------------------------
- ```
-    CREATE TABLE Route_Stops (
+ ```sql
+CREATE TABLE Route_Stops (
     route_id       INT NOT NULL REFERENCES Route(route_id) ON DELETE CASCADE,
     station_id     INT NOT NULL REFERENCES Station(station_id),
     sequence_no    INT NOT NULL,
@@ -61,8 +61,8 @@ This project involves designing and building a Railway Reservation System databa
 -- ------------------------------------------------------------
 -- 5. SCHEDULE
 -- ------------------------------------------------------------
- ```
-    CREATE TABLE Schedule (
+ ```sql
+CREATE TABLE Schedule (
     schedule_id    SERIAL PRIMARY KEY,
     train_id       INT NOT NULL REFERENCES Train(train_id) ON DELETE CASCADE,
     run_date       DATE NOT NULL,
@@ -75,8 +75,8 @@ This project involves designing and building a Railway Reservation System databa
 -- ------------------------------------------------------------
 -- 6. SEAT_CLASS
 -- ------------------------------------------------------------
- ```
-    CREATE TABLE Seat_Class (
+ ```sql
+CREATE TABLE Seat_Class (
     class_id       SERIAL PRIMARY KEY,
     class_name     VARCHAR(20) NOT NULL UNIQUE,
     fare_per_km    DECIMAL(6,2) NOT NULL
@@ -85,8 +85,8 @@ This project involves designing and building a Railway Reservation System databa
 -- ------------------------------------------------------------
 -- 7. SCHEDULE_SEAT_AVAILABILITY
 -- ------------------------------------------------------------
- ```
-    CREATE TABLE Schedule_Seat_Availability (
+ ```sql
+CREATE TABLE Schedule_Seat_Availability (
     schedule_id    INT NOT NULL REFERENCES Schedule(schedule_id) ON DELETE CASCADE,
     class_id       INT NOT NULL REFERENCES Seat_Class(class_id),
     total_seats    INT NOT NULL,
@@ -98,8 +98,8 @@ This project involves designing and building a Railway Reservation System databa
 -- ------------------------------------------------------------
 -- 8. PASSENGER
 -- ------------------------------------------------------------
- ```
-    CREATE TABLE Passenger (
+ ```sql
+CREATE TABLE Passenger (
     passenger_id   SERIAL PRIMARY KEY,
     full_name      VARCHAR(100) NOT NULL,
     age            INT CHECK (age > 0 AND age < 120),
@@ -111,8 +111,8 @@ This project involves designing and building a Railway Reservation System databa
 -- ------------------------------------------------------------
 -- 9. TICKET / BOOKING
 -- ------------------------------------------------------------
- ```
-    CREATE TABLE Ticket (
+ ```sql
+CREATE TABLE Ticket (
     ticket_id      SERIAL PRIMARY KEY,
     passenger_id   INT NOT NULL REFERENCES Passenger(passenger_id),
     schedule_id    INT NOT NULL REFERENCES Schedule(schedule_id),
@@ -126,8 +126,8 @@ This project involves designing and building a Railway Reservation System databa
 -- ------------------------------------------------------------
 -- 10. PAYMENT
 -- ------------------------------------------------------------
- ```
-    CREATE TABLE Payment (
+ ```sql
+CREATE TABLE Payment (
     payment_id     SERIAL PRIMARY KEY,
     ticket_id      INT NOT NULL UNIQUE REFERENCES Ticket(ticket_id) ON DELETE CASCADE,
     amount         DECIMAL(8,2) NOT NULL,
@@ -139,7 +139,7 @@ This project involves designing and building a Railway Reservation System databa
 -- ------------------------------------------------------------
 -- Indexes
 -- ------------------------------------------------------------
-```
+```sql
 CREATE INDEX idx_train_number ON Train(train_number);
 CREATE INDEX idx_station_code ON Station(station_code);
 CREATE INDEX idx_ticket_passenger ON Ticket(passenger_id);
@@ -189,25 +189,25 @@ Indexes were added on frequently searched columns (`train_number`, `station_code
 ## A. BASIC QUERIES
 
 A1. List all trains
-```
+```sql
 SELECT train_number, train_name, train_type, total_seats FROM Train;
 ```
 A2. Find all schedules running on a given date
-```
+```sql
 SELECT s.schedule_id, t.train_name, s.departure_time, s.arrival_time, s.status
 FROM Schedule s
 JOIN Train t ON s.train_id = t.train_id
 WHERE s.run_date = '2026-08-05';
 ```
 A3. Available seats for a specific schedule, by class
-```
+```sql
 SELECT sc.class_name, sa.available_seats
 FROM Schedule_Seat_Availability sa
 JOIN Seat_Class sc ON sa.class_id = sc.class_id
 WHERE sa.schedule_id = 1;
 ```
 A4. A passenger's full booking history
-```
+```sql
 SELECT tk.ticket_id, tr.train_name, s.run_date, sc.class_name, tk.status, tk.fare
 FROM Ticket tk
 JOIN Schedule s ON tk.schedule_id = s.schedule_id
@@ -218,7 +218,7 @@ WHERE tk.passenger_id = 1;
 ## B. JOIN QUERIES
 
 B1. Full ticket details: passenger + train + route + payment
-```
+```sql
 SELECT
     tk.ticket_id,
     p.full_name       AS passenger,
@@ -241,7 +241,7 @@ LEFT JOIN Payment pay     ON pay.ticket_id = tk.ticket_id
 ORDER BY tk.ticket_id;
 ```
 B2. All intermediate stations a train passes through, in order
-```
+```sql
 SELECT tr.train_name, st.station_name, rs.sequence_no, rs.arrival_time, rs.departure_time
 FROM Route_Stops rs
 JOIN Route r  ON rs.route_id = r.route_id
@@ -251,7 +251,7 @@ WHERE tr.train_number = '12951'
 ORDER BY rs.sequence_no;
 ```
 B3. Trains that run between two specific cities
-```
+```sql
 SELECT DISTINCT tr.train_name, tr.train_number, src.city AS from_city, dst.city AS to_city
 FROM Route r
 JOIN Train tr ON r.train_id = tr.train_id
@@ -262,7 +262,7 @@ WHERE src.city = 'Delhi' AND dst.city = 'Mumbai';
 ## C. AGGREGATION QUERIES
 
 C1. Total revenue per train
-```
+```sql
 SELECT tr.train_name, SUM(pay.amount) AS total_revenue
 FROM Payment pay
 JOIN Ticket tk ON pay.ticket_id = tk.ticket_id
@@ -273,7 +273,7 @@ GROUP BY tr.train_name
 ORDER BY total_revenue DESC;
 ```
 C2. Most booked routes (by confirmed ticket count)
-```
+```sql
 SELECT tr.train_name, COUNT(*) AS confirmed_bookings
 FROM Ticket tk
 JOIN Schedule s ON tk.schedule_id = s.schedule_id
@@ -283,7 +283,7 @@ GROUP BY tr.train_name
 ORDER BY confirmed_bookings DESC;
 ```
 C3. Occupancy rate (%) per schedule
-```
+```sql
 SELECT
     s.schedule_id,
     tr.train_name,
@@ -298,7 +298,7 @@ GROUP BY s.schedule_id, tr.train_name, s.run_date
 ORDER BY occupancy_pct DESC;
 ```
 C4. Revenue collected by payment mode
-```
+```sql
 SELECT payment_mode, COUNT(*) AS num_transactions, SUM(amount) AS total_amount
 FROM Payment
 WHERE payment_status = 'SUCCESS'
@@ -307,7 +307,7 @@ GROUP BY payment_mode;
 ## D. SUBQUERIES / ADVANCED
 
 D1. Passengers who have NEVER had a cancelled ticket
-```
+```sql
 SELECT p.full_name
 FROM Passenger p
 WHERE p.passenger_id NOT IN (
@@ -315,7 +315,7 @@ WHERE p.passenger_id NOT IN (
 );
 ```
 D2. Schedules with occupancy above 90%
-```
+```sql
 SELECT s.schedule_id, tr.train_name, s.run_date
 FROM Schedule s
 JOIN Train tr ON s.train_id = tr.train_id
@@ -327,7 +327,7 @@ WHERE s.schedule_id IN (
 );
 ```
 D3. Waitlisted passengers, ranked by booking date (oldest first = highest priority)
-```
+```sql
 SELECT tk.ticket_id, p.full_name, s.run_date, tk.booking_date
 FROM Ticket tk
 JOIN Passenger p ON tk.passenger_id = p.passenger_id
@@ -336,7 +336,7 @@ WHERE tk.status = 'WAITLIST'
 ORDER BY tk.booking_date ASC;
 ```
 D4. Train with the highest total revenue (correlated subquery style)
-```
+```sql
 SELECT tr.train_name,
        (SELECT SUM(pay.amount)
         FROM Payment pay
@@ -348,7 +348,7 @@ ORDER BY revenue DESC
 LIMIT 1;
 ```
 D5. Passengers who booked more than one ticket
-```
+```sql
 SELECT p.full_name, COUNT(*) AS ticket_count
 FROM Ticket tk
 JOIN Passenger p ON tk.passenger_id = p.passenger_id
@@ -358,7 +358,7 @@ HAVING COUNT(*) > 1;
 ## RAILWAY RESERVATION SYSTEM - VIEWS
 
 View 1: Consolidated ticket details - passenger + train + route + payment
-```
+```sql
 CREATE OR REPLACE VIEW vw_ticket_details AS
 SELECT
     tk.ticket_id,
