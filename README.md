@@ -11,7 +11,7 @@ This project involves designing and building a Railway Reservation System databa
 -- 1. STATION
 -- ------------------------------------------------------------
  ```
-    CREATE TABLE Station (
+ CREATE TABLE Station (
     station_id     SERIAL PRIMARY KEY,
     station_name   VARCHAR(100) NOT NULL,
     station_code   VARCHAR(10)  NOT NULL UNIQUE,
@@ -23,7 +23,7 @@ This project involves designing and building a Railway Reservation System databa
 -- 2. TRAIN
 -- ------------------------------------------------------------
  ```
-    CREATE TABLE Train (
+ CREATE TABLE Train (
     train_id       SERIAL PRIMARY KEY,
     train_number   VARCHAR(10) NOT NULL UNIQUE,
     train_name     VARCHAR(100) NOT NULL,
