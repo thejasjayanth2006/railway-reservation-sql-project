@@ -10,7 +10,7 @@ This project involves designing and building a Railway Reservation System databa
 -- ------------------------------------------------------------
 -- 1. STATION
 -- ------------------------------------------------------------
- ```
+ ```sql
  CREATE TABLE Station (
     station_id     SERIAL PRIMARY KEY,
     station_name   VARCHAR(100) NOT NULL,
