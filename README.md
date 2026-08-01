@@ -1,8 +1,6 @@
 # Railway Reservation System - SQL Project
 [Click Here to get Dataset](data set railway.sql)
 
-![Railway Reservation Logo](data set railway.sql)
-
 ## Overview
 This project involves designing and building a Railway Reservation System database from scratch using **SQL**. It covers the full process of modeling real-world entities (stations, trains, routes, schedules, passengers, tickets, and payments) into a normalized relational schema, populating it with sample data, and writing SQL queries of varying complexity (basic, joins, aggregations, and subqueries) — along with views, triggers, and stored procedures to automate booking logic. The primary goals of the project are to practice core and advanced SQL skills and build a realistic, end-to-end database system.
 
