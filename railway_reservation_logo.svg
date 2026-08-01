@@ -1,0 +1,70 @@
+<svg viewBox="0 0 480 560" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="badgeClip">
+      <circle cx="240" cy="190" r="150"/>
+    </clipPath>
+  </defs>
+
+  <!-- Perforated ticket ring -->
+  <circle cx="240" cy="190" r="172" fill="none" stroke="#E3A83B" stroke-width="4" stroke-dasharray="9 11"/>
+
+  <!-- Main badge -->
+  <circle cx="240" cy="190" r="150" fill="#132A4C"/>
+
+  <g clip-path="url(#badgeClip)">
+    <!-- Motion lines -->
+    <line x1="55" y1="165" x2="115" y2="165" stroke="#F4F1E8" stroke-width="6" stroke-linecap="round" opacity="0.55"/>
+    <line x1="45" y1="185" x2="120" y2="185" stroke="#F4F1E8" stroke-width="6" stroke-linecap="round" opacity="0.75"/>
+    <line x1="60" y1="205" x2="115" y2="205" stroke="#F4F1E8" stroke-width="6" stroke-linecap="round" opacity="0.55"/>
+
+    <!-- Rail track beneath train -->
+    <line x1="70" y1="248" x2="410" y2="248" stroke="#E3A83B" stroke-width="5"/>
+    <line x1="80" y1="258" x2="100" y2="248" stroke="#E3A83B" stroke-width="5"/>
+    <line x1="120" y1="258" x2="140" y2="248" stroke="#E3A83B" stroke-width="5"/>
+    <line x1="160" y1="258" x2="180" y2="248" stroke="#E3A83B" stroke-width="5"/>
+    <line x1="200" y1="258" x2="220" y2="248" stroke="#E3A83B" stroke-width="5"/>
+    <line x1="240" y1="258" x2="260" y2="248" stroke="#E3A83B" stroke-width="5"/>
+    <line x1="280" y1="258" x2="300" y2="248" stroke="#E3A83B" stroke-width="5"/>
+    <line x1="320" y1="258" x2="340" y2="248" stroke="#E3A83B" stroke-width="5"/>
+    <line x1="360" y1="258" x2="380" y2="248" stroke="#E3A83B" stroke-width="5"/>
+
+    <!-- Train body -->
+    <path d="M 130 145
+             L 320 145
+             Q 360 145 372 175
+             L 372 205
+             Q 372 220 357 220
+             L 138 220
+             Q 123 220 123 205
+             L 123 160
+             Q 123 145 130 145 Z"
+          fill="#F4F1E8"/>
+
+    <!-- Chassis stripe -->
+    <rect x="123" y="205" width="249" height="10" fill="#E3A83B"/>
+
+    <!-- Nose headlight -->
+    <circle cx="358" cy="192" r="9" fill="#E3A83B"/>
+
+    <!-- Windows -->
+    <rect x="150" y="163" width="34" height="26" rx="6" fill="#8FB6D9"/>
+    <rect x="196" y="163" width="34" height="26" rx="6" fill="#8FB6D9"/>
+    <rect x="242" y="163" width="34" height="26" rx="6" fill="#8FB6D9"/>
+    <rect x="288" y="163" width="34" height="26" rx="6" fill="#8FB6D9"/>
+
+    <!-- Wheels -->
+    <circle cx="165" cy="222" r="15" fill="#132A4C" stroke="#E3A83B" stroke-width="4"/>
+    <circle cx="235" cy="222" r="15" fill="#132A4C" stroke="#E3A83B" stroke-width="4"/>
+    <circle cx="305" cy="222" r="15" fill="#132A4C" stroke="#E3A83B" stroke-width="4"/>
+  </g>
+
+  <!-- Wordmark -->
+  <text x="240" y="410" text-anchor="middle"
+        font-family="Arial, Helvetica, sans-serif" font-weight="800"
+        font-size="42" letter-spacing="3" fill="#132A4C">RAILRESERVE</text>
+
+  <!-- Tagline -->
+  <text x="240" y="440" text-anchor="middle"
+        font-family="Arial, Helvetica, sans-serif" font-weight="600"
+        font-size="15" letter-spacing="4" fill="#C08A2E">SEAT &#183; SCHEDULE &#183; JOURNEY</text>
+</svg>
