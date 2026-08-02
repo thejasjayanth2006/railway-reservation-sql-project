@@ -1,5 +1,4 @@
 # Railway Reservation System - SQL Project
-[Click Here to get Dataset](data set railway.sql)
 
 ![TrackPulse Logo](railway_reservation_logo.svg)
 
