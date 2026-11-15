@@ -384,6 +384,24 @@ JOIN Station dst    ON r.destination_station_id = dst.station_id
 JOIN Seat_Class sc  ON tk.class_id = sc.class_id
 LEFT JOIN Payment pay ON pay.ticket_id = tk.ticket_id;
 ```
+## Excel Analysis
+
+An Excel workbook, `Railway_Reservation_Analysis.xlsx`, builds on the SQL query outputs (revenue, occupancy and payment-mode queries) using the sample data in this repo.
+
+**Sheets**
+- **Revenue by Train**: revenue per train (successful payments only) and confirmed bookings, with a bar chart
+- **Occupancy**: occupancy % per schedule, with a column chart
+- **Payment Modes**: transactions and revenue by payment mode, with a pie chart
+- **Payments** and **Seat_Availability**: raw data from `data set railway.sql`
+
+**Method**
+- Summary tables use `SUMIFS` and `COUNTIFS` formulas on the raw data sheets
+- Revenue counts `payment_status = 'SUCCESS'` only, matching the SQL revenue query
+- Occupancy = seats booked / total seats
+
+**Key results (sample data)**
+- Total revenue: ₹11,910.60
+- Highest-revenue train: Mumbai Rajdhani Express (₹6,504.80)
 ---
 ## Technology Stack
 - **Database**: PostgreSQL
