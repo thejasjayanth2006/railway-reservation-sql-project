@@ -407,12 +407,13 @@ An Excel workbook, `Railway_Reservation_Analysis.xlsx`, builds on the SQL query 
 - **Database**: PostgreSQL
 - **SQL Queries**: DDL, DML, Aggregations, Joins, Subqueries, Views
 - **Tools**: pgAdmin 4 (or any SQL editor), PostgreSQL (via direct installation, Docker, or an online sandbox like DB Fiddle)
+- **Analysis**: Microsoft Excel (SUMIFS/COUNTIFS summary tables and charts)
 ---
 ## How to Run the Project
 1. Install PostgreSQL and pgAdmin (if not already installed).
 2. Create a database named `railway_reservation`.
-3. Run `01_schema.sql` to set up all tables, keys, and constraints.
-4. Run `02_sample_data.sql` to insert sample stations, trains, passengers, and tickets.
-5. Run `03_queries.sql` to execute the practice queries — basic, joins, aggregations, and subqueries.
-6. Run `04_views.sql` to create the reporting views.
+3. 3. Run the CREATE TABLE statements given in the README (schema section) to set up all tables, keys, and constraints.
+4. Run `data set railway.sql` to insert the sample stations, trains, passengers, and tickets.
+5. Run the practice queries given in the README: basic, joins, aggregations, and subqueries.
+6. Open `Railway_Reservation_Analysis.xlsx` to view the Excel summary tables and charts built on the query outputs.
 ---
